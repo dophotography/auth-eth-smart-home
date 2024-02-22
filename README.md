@@ -37,7 +37,8 @@ truffle migrate
 
 Integrate the smart contract into your smart home application's backend. Use the contract functions to authenticate users securely.
 
-```// Example usage in JavaScript
+### Example usage in JavaScript
+```javascript
 const LoginService = artifacts.require('LoginService');
 
 const loginServiceInstance = await LoginService.deployed();
