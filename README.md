@@ -39,8 +39,30 @@ Integrate the smart contract into your smart home application's backend. Use the
 
 ### Example usage in JavaScript
 ```javascript
-const LoginService = artifacts.require('LoginService');
+const Web3 = require('web3');
+const web3 = new Web3('http://localhost:8545'); // Replace with your Ethereum node URL
 
-const loginServiceInstance = await LoginService.deployed();
-const isUserAuthenticated = await loginServiceInstance.authenticateUser(userAddress, userPassword);
+const LoginSystemContract = artifacts.require('LoginSystem'); // Assuming you have the truffle artifacts available
+
+async function main() {
+  const accounts = await web3.eth.getAccounts();
+
+  // Deploy the LoginSystem contract
+  const loginSystemInstance = await LoginSystemContract.new();
+
+  // Connect wallet for user1
+  await loginSystemInstance.connectWallet({ from: accounts[0] });
+
+  // Set house name for user1
+  await loginSystemInstance.setHouseName('User1House', { from: accounts[0] });
+
+  // Get house name for user1
+  const houseName = await loginSystemInstance.getHouseName({ from: accounts[0] });
+
+  // Check if user1 is logged in
+  const isUserLoggedIn = await loginSystemInstance.isUserLoggedIn({ from: accounts[0] });
+}
+
+main();
+
 ```
